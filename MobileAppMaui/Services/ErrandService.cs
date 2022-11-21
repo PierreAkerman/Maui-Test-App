@@ -38,7 +38,11 @@ namespace MobileAppMaui.Services
         {
             Errands = new List<ErrandModel>();
 
-            var uri = new Uri(string.Format("http://localhost:7197/api/technicianErrand", string.Empty));
+            id = "4d91ae92-e9cd-4af1-bb33-432ce12d5864";
+
+
+
+            var uri = new Uri(string.Format($"https://grupp3azurefunctions.azurewebsites.net/api/technicianErrand?id={id}", string.Empty));
 
             try
             {
