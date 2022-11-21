@@ -10,6 +10,6 @@ namespace MobileAppMaui.Services
     public interface IElevatorService
     {
         Task<IEnumerable<ElevatorListModel>> GetAllElevatorsAsync();
-        Task<ElevatorDetailsModel> GetOneElevatorAsync(string id);
+        Task<ElevatorDetailsModel> GetOneElevatorAsync(string elevatorId);
     }
 }
