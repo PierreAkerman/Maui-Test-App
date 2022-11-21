@@ -1,0 +1,47 @@
+﻿@page "/ElevatorDetails"
+@using MobileAppMaui.Services
+@using MobileAppMaui.Data
+@inject IElevatorService ElevatorService;
+
+<h3>ElevatorDetails</h3>
+
+@if (elevator == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>DoorStatus</th>
+                <th>CurrentLevel</th>
+                <th>TargetLevel</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>@elevator.Id</td>
+                <td>@elevator.Name</td>
+                <td>@elevator.Status</td>
+                <td>@elevator.DoorStatus</td>
+                <td>@elevator.CurrentLevel</td>
+                <td>@elevator.TargetLevel</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    public ElevatorDetailsModel elevator;
+
+    protected override async Task OnInitializedAsync()
+    {
+        elevator = await ElevatorService.GetOneElevatorAsync("04ddc77d-d1c3-41dd-a3e8-14896f1d9b63");
+    }
+}

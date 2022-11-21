@@ -1,0 +1,49 @@
+﻿@page "/"
+@using MobileAppMaui.Services
+@using MobileAppMaui.Data
+@inject IElevatorService ElevatorService;
+
+<h1>All Elevators</h1>
+
+@if (_elevators == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>DoorStatus</th>
+                <th>CurrentLevel</th>
+                <th>TargetLevel</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var elevator in _elevators)
+                {
+                    <tr>
+                        <td>@elevator.Name</td>
+                        <td>@elevator.Status</td>
+                        <td>@elevator.DoorStatus</td>
+                        <td>@elevator.CurrentLevel</td>
+                        <td>@elevator.TargetLevel</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code
+{
+    IEnumerable<ElevatorListModel> _elevators;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _elevators = await ElevatorService.GetAllElevatorsAsync();
+    }
+}
