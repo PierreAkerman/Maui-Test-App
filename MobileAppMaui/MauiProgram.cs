@@ -21,6 +21,7 @@ namespace MobileAppMaui
 		builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
             builder.Services.AddSingleton<IElevatorService, ElevatorService>();
+            builder.Services.AddSingleton<IErrandService, ErrandService>();
             builder.Services.AddSingleton<WeatherForecastService>();
 
             return builder.Build();

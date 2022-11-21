@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MobileAppMaui.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace MobileAppMaui.Services
 {
     public interface IErrandService
     {
-        Task<List<ErrandModel>> GetErrandsFromTechnicianIdAsync();
+        Task<List<ErrandModel>> GetErrandsFromTechnicianIdAsync(string id);
     }
 }

@@ -1,0 +1,57 @@
+﻿@page "/GetErrandByTechnicianId"
+@using MobileAppMaui.Services
+@using MobileAppMaui.Data
+@inject IErrandService ErrandService;
+
+<h3>GetErrandByTechnicianId</h3>
+
+
+@if (errands == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Last edited</th>
+                    <th>Created at</th>
+                    <th>Created by</th>
+                    <th>Technician</th>
+                    <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var errand in errands)
+                {
+                    <tr>
+                        <td>@errand.Title</td>
+                        <td>@errand.Description</td>
+                        <td>@errand.Status</td>
+                        <td>@errand.LastEdited</td>
+                        <td>@errand.CreatedAt</td>
+                        <td>@errand.CreatedBy</td>
+                        <td>@errand.Technician</td>
+                        @*<td>
+                            @foreach (var comment in comments)
+                        </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    IEnumerable<ErrandModel> errands;
+
+    protected override async Task OnInitializedAsync()
+    {
+        errands = await ErrandService.GetErrandsFromTechnicianIdAsync("4d91ae92-e9cd-4af1-bb33-432ce12d5864");
+    }
+}
