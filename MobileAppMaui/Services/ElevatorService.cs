@@ -63,15 +63,21 @@ namespace MobileAppMaui.Services
 
             id = "04ddc77d-d1c3-41dd-a3e8-14896f1d9b63";
 
-            var uri = new Uri(string.Format($"http://localhost:7197/api/elevator?id={id}", string.Empty));
-           
-            var response = await _client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
+            var uri = new Uri(string.Format($"{baseUrl}/elevator?id={id}", string.Empty));
+            try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                Item = JsonSerializer.Deserialize<ElevatorDetailsModel>(content);
+                var response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Item = JsonConvert.DeserializeObject<ElevatorDetailsModel>(content);
+                }
             }
-
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+            
             return Item;
 
             //var request = new HttpRequestMessage
@@ -80,13 +86,20 @@ namespace MobileAppMaui.Services
             //    RequestUri = new Uri("http://localhost:7197/api/elevator"),
             //    Content = new StringContent(id, Encoding.UTF8, MediaTypeNames.Application.Json),
             //};
-
-            //var response = await _client.SendAsync(request);
-            //if (response.IsSuccessStatusCode)
+            //try
             //{
-            //    var content = await response.Content.ReadAsStringAsync();
-            //    Item = JsonConvert.DeserializeObject<ElevatorDetailsModel>(content);
+            //    var response = await _client.SendAsync(request);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        var content = await response.Content.ReadAsStringAsync();
+            //        Item = JsonSerializer.Deserialize<ElevatorDetailsModel>(content);
+            //    }
             //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            //}
+            
             //return Item;
         }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
 using MobileAppMaui.Data;
 using MobileAppMaui.Services;
+using System.Net;
 
 namespace MobileAppMaui
 {
@@ -22,6 +23,8 @@ namespace MobileAppMaui
 #endif
             builder.Services.AddSingleton<IElevatorService, ElevatorService>();
             builder.Services.AddSingleton<WeatherForecastService>();
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             return builder.Build();
         }
