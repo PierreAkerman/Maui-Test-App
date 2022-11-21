@@ -1,11 +1,12 @@
 ﻿@page "/ElevatorDetails"
+@page "/ElevatorDetails/{elevatorId}"
 @using MobileAppMaui.Services
 @using MobileAppMaui.Data
 @inject IElevatorService ElevatorService;
 
 <h3>ElevatorDetails</h3>
 
-@if (elevator == null)
+@if (_elevator == null)
 {
     <p>Loading...</p>
 }
@@ -25,23 +26,60 @@ else
             </thead>
             <tbody>
             <tr>
-                <td>@elevator.Id</td>
-                <td>@elevator.Name</td>
-                <td>@elevator.Status</td>
-                <td>@elevator.DoorStatus</td>
-                <td>@elevator.CurrentLevel</td>
-                <td>@elevator.TargetLevel</td>
+                <td>@_elevator.Id</td>
+                <td>@_elevator.Name</td>
+                <td>@_elevator.Status</td>
+                <td>@_elevator.DoorStatus</td>
+                <td>@_elevator.CurrentLevel</td>
+                <td>@_elevator.TargetLevel</td>
             </tr>
             </tbody>
         </table>
     </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created</th>
+                <th>Status</th>
+                <th>Technician</th>
+                <th>Comments</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var errand in _elevator.Errands)
+            {
+                <tr>
+                    <td>@errand.Title</td>
+                    <td>@errand.Description</td>
+                    <td>@errand.CreatedAt.ToString("d")</td>
+                    <td>@errand.Status</td>
+                    <td>@errand.Technician.Name</td>
+                    <td>@errand.Comments.Count</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <NavLink href="/" target="_blank">Back</NavLink>
+    </div>
 }
 
 @code {
-    public ElevatorDetailsModel elevator;
+    [Parameter]
+    public string elevatorId { get; set; }
+}
+
+@code {
+    public ElevatorDetailsModel _elevator;
 
     protected override async Task OnInitializedAsync()
     {
-        elevator = await ElevatorService.GetOneElevatorAsync("04ddc77d-d1c3-41dd-a3e8-14896f1d9b63");
+        _elevator = await ElevatorService.GetOneElevatorAsync(elevatorId);
     }
 }

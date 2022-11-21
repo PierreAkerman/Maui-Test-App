@@ -15,5 +15,10 @@ namespace MobileAppMaui.Data
         public int CurrentLevel { get; set; }
         public int TargetLevel { get; set; }
         public List<ErrandModel> Errands { get; set; }
+
+        public string Url
+        {
+            get { return "ElevatorDetails/" + this.Id; }
+        }
     }
 }

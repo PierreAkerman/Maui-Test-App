@@ -21,5 +21,10 @@ namespace MobileAppMaui.Data
         public bool DoorStatus { get; set; }
         public int CurrentLevel { get; set; }
         public int TargetLevel { get; set; }
+
+        public string Url
+        {
+            get { return "ElevatorDetails/" + this.Id; }
+        }
     }
 }
