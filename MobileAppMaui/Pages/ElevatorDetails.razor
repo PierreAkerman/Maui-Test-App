@@ -3,6 +3,7 @@
 @using MobileAppMaui.Services
 @using MobileAppMaui.Data
 @inject IElevatorService ElevatorService;
+@inject NavigationManager Navigation;
 
 <h3>ElevatorDetails</h3>
 
@@ -36,6 +37,32 @@ else
             </tbody>
         </table>
     </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>CreatedBy</th>
+                <th>Technicians</th>
+                <th>Comments</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var errand in elevator.Errands)
+                {
+                    <tr @onclick="@(()=>DisplayOption(errand))">
+                        <td>@errand.Title</td>
+                        <td>@errand.Status</td>
+                        <td>@errand.CreatedBy</td>
+                        <td>@errand.Technician.Name</td>
+                        <td>@errand.Comments.Count</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 @code {
@@ -48,5 +75,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         elevator = await ElevatorService.GetOneElevatorAsync(ElevatorId);
+    }
+
+    private void DisplayOption(ErrandModel errand)
+    {
+        Navigation.NavigateTo($"ErrandDetails/{errand.Id.ToString()}");
     }
 }

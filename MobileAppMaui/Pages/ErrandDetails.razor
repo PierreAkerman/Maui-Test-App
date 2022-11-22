@@ -1,0 +1,80 @@
+﻿@page "/ErrandDetails"
+@page "/ErrandDetails/{ErrandId}"
+@using MobileAppMaui.Services
+@using MobileAppMaui.Data
+@inject IErrandService ErrandService;
+@inject NavigationManager Navigation;
+
+<h3>Errand Details</h3>
+
+
+@if (errand == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Last edited</th>
+                <th>Created at</th>
+                <th>Created by</th>
+                <th>Technician</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>@errand.Title</td>
+                <td>@errand.Description</td>
+                <td>@errand.Status</td>
+                <td>@errand.LastEdited.ToString("d")</td>
+                <td>@errand.CreatedAt.ToString("d")</td>
+                <td>@errand.CreatedBy</td>
+                <td>@errand.Technician.Name</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-responsive">
+        <h3>Comments</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Comment</th>
+                <th>Author</th>
+                <th>Posted</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var comment in errand.Comments)
+            {
+                <tr>
+                    <td>@comment.Content</td>
+                    <td>@comment.Author</td>
+                    <td>@comment.PostedAt.ToString("d")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+}
+
+@code {
+
+    [Parameter]
+    public string ErrandId { get; set; }
+
+    ErrandModel errand;
+
+    protected override async Task OnInitializedAsync()
+    {
+        errand = await ErrandService.GetOneErrandAsync(ErrandId);
+    }
+}

@@ -48,7 +48,7 @@ else
         _elevators = await ElevatorService.GetAllElevatorsAsync();
     }
 
-    private async void DisplayOption(ElevatorDetailsModel elevator)
+    private  void DisplayOption(ElevatorDetailsModel elevator)
     {
         Navigation.NavigateTo($"ElevatorDetails/{elevator.Id}");
     }
