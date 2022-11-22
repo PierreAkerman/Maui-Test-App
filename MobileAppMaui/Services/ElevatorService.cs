@@ -23,7 +23,7 @@ namespace MobileAppMaui.Services
         public readonly JsonSerializerOptions _serializerOptions;
 
         public List<ElevatorListModel> Items { get; private set; }
-        public List<ElevatorDetailsModel> DetailedItems { get; private set; }
+        public List<ElevatorDetailsModel> DetailedItems { get; set; }
         public ElevatorDetailsModel Item { get; private set; }
 
         public ElevatorService()
@@ -36,32 +36,30 @@ namespace MobileAppMaui.Services
             };
         }
 
-        public async Task<IEnumerable<ElevatorListModel>> GetAllElevatorsAsync()
+        public async Task<IEnumerable<ElevatorDetailsModel>> GetAllElevatorsAsync()
         {
-            Items = new List<ElevatorListModel>();
+            DetailedItems = new List<ElevatorDetailsModel>();
 
-            var uri = new Uri(string.Format($"{baseUrl}/elevator/all?", string.Empty));
+            var uri = new Uri(string.Format($"{baseUrl}/elevator/all/detailed?", string.Empty));
             try
             {
                 var response = await _client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    Items = JsonSerializer.Deserialize<List<ElevatorListModel>>(content, _serializerOptions);
+                    DetailedItems = JsonConvert.DeserializeObject<List<ElevatorDetailsModel>>(content);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
             }
-            return Items;
+            return DetailedItems;
         }
 
         public async Task<ElevatorDetailsModel> GetOneElevatorAsync(string id)
         {
             Item = new ElevatorDetailsModel();
-
-            id = "04ddc77d-d1c3-41dd-a3e8-14896f1d9b63";
 
             var uri = new Uri(string.Format($"{baseUrl}/elevator?id={id}", string.Empty));
             try

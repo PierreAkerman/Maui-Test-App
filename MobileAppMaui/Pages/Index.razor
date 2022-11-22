@@ -2,6 +2,7 @@
 @using MobileAppMaui.Services
 @using MobileAppMaui.Data
 @inject IElevatorService ElevatorService;
+@inject NavigationManager Navigation;
 
 <h1>All Elevators</h1>
 
@@ -25,7 +26,7 @@ else
             <tbody>
                 @foreach (var elevator in _elevators)
                 {
-                    <tr>
+                    <tr @onclick="@(()=>DisplayOption(elevator))">
                         <td>@elevator.Name</td>
                         <td>@elevator.Status</td>
                         <td>@elevator.DoorStatus</td>
@@ -40,10 +41,15 @@ else
 
 @code
 {
-    IEnumerable<ElevatorListModel> _elevators;
+    IEnumerable<ElevatorDetailsModel> _elevators;
 
     protected override async Task OnInitializedAsync()
     {
         _elevators = await ElevatorService.GetAllElevatorsAsync();
+    }
+
+    private async void DisplayOption(ElevatorDetailsModel elevator)
+    {
+        Navigation.NavigateTo($"ElevatorDetails/{elevator.Id}");
     }
 }

@@ -9,6 +9,7 @@ namespace MobileAppMaui.Data
     public class ElevatorDetailsModel
     {
         public Guid Id { get; set; }
+        public string ConnectionString { get; set; }
         public string Name { get; set; }
         public ElevatorStatus Status { get; set; }
         public bool DoorStatus { get; set; }
