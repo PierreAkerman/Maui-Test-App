@@ -1,0 +1,51 @@
+﻿@page "/SelectTechnician"
+@using MobileAppMaui.Data
+@using MobileAppMaui.Services
+@inject ITechnicianService TechnicianService
+
+
+<h3>SelectTechnician</h3>
+
+
+@if (technicians == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var technician in technicians)
+            {
+                <tr>
+                    <td>@technician.Id</td>
+                    <td>@technician.Name</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+
+
+
+@code {
+
+    public IEnumerable<TechnicianModel> technicians;
+
+    protected override async Task OnInitializedAsync()
+    {
+        technicians = await TechnicianService.GetAllTechnicians();
+    }
+
+
+}

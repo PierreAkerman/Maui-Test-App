@@ -22,6 +22,7 @@ namespace MobileAppMaui
 #endif
             builder.Services.AddSingleton<IElevatorService, ElevatorService>();
             builder.Services.AddSingleton<IErrandService, ErrandService>();
+            builder.Services.AddSingleton<ITechnicianService, TechnicianService>();
             builder.Services.AddSingleton<WeatherForecastService>();
 
             return builder.Build();
