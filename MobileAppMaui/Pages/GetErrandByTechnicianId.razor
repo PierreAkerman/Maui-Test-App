@@ -12,7 +12,6 @@
 }
 else
 {
-    <div></div>
     <div class="table-responsive">
         <table class="table">
             <tbody>
@@ -46,76 +45,30 @@ else
                         <th>Technician</th>
                         <td>@errand.Technician.Name</td>
                     </tr>
-                    <tbody>
-                        <tr>
-                            <th>Comments</th>
-                        </tr>
+                <tbody>
+                    <tr>
+                        <th>Comments</th>
+                    </tr>
                         @foreach (var comment in errand.Comments)
                         {
-                            <tr class="d-flex flex-column">
-                                <td>
+                        <tr class="d-flex flex-column">
+                            <td>
                                     @comment.PostedAt.ToString("d") - @comment.Author
-                                    <br>
+                                <br>
                                     @comment.Content
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                }
-            </tbody>
-        </table>
-        @*<div>
-            <table>
-                <tbody>
-                        @foreach (var comment in errands.)
-                        {
-                            @comment.Content
+                            </td>
+                        </tr>
                         }
                 </tbody>
-            </table>
-        </div>*@
-    </div>
-    @*<div></div>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Last edited</th>
-                    <th>Created at</th>
-                    <th>Created by</th>
-                    <th>Technician</th>
-                    <th>Comments</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var errand in errands)
-                {
-                    <tr>
-                        <td>@errand.Title</td>
-                        <td>@errand.Description</td>
-                        <td>@errand.Status</td>
-                        <td>@errand.LastEdited.ToString("d")</td>
-                        <td>@errand.CreatedAt.ToString("d")</td>
-                        <td>@errand.CreatedBy</td>
-                        <td>@errand.Technician</td>
-                        <td>
-                            @foreach (var comment in errand.Comments)
-                            {
-                                @comment.Content
-                            }
-                        </td>
-                    </tr>
                 }
             </tbody>
         </table>
-    </div>*@
+      </div>  
 }
 
 @code {
     IEnumerable<ErrandModel> errands;
+
 
     protected override async Task OnInitializedAsync()
     {
