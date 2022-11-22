@@ -22,8 +22,7 @@ namespace MobileAppMaui.Services
         public readonly HttpClient _client;
         public readonly JsonSerializerOptions _serializerOptions;
 
-        public List<ElevatorListModel> Items { get; private set; }
-        public List<ElevatorDetailsModel> DetailedItems { get; set; }
+        public List<ElevatorDetailsModel> Items { get; set; }
         public ElevatorDetailsModel Item { get; private set; }
 
         public ElevatorService()
@@ -38,7 +37,7 @@ namespace MobileAppMaui.Services
 
         public async Task<IEnumerable<ElevatorDetailsModel>> GetAllElevatorsAsync()
         {
-            DetailedItems = new List<ElevatorDetailsModel>();
+            Items = new List<ElevatorDetailsModel>();
 
             var uri = new Uri(string.Format($"{baseUrl}/elevator/all/detailed?", string.Empty));
             try
@@ -47,17 +46,17 @@ namespace MobileAppMaui.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    DetailedItems = JsonConvert.DeserializeObject<List<ElevatorDetailsModel>>(content);
+                    Items = JsonConvert.DeserializeObject<List<ElevatorDetailsModel>>(content);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
             }
-            return DetailedItems;
+            return Items;
         }
 
-        public async Task<ElevatorDetailsModel> GetOneElevatorAsync(string id)
+        public async Task<ElevatorDetailsModel> GetElevatorByIdAsync(string id)
         {
             Item = new ElevatorDetailsModel();
 
@@ -77,43 +76,6 @@ namespace MobileAppMaui.Services
             }
 
             return Item;
-
-            //var request = new HttpRequestMessage
-            //{
-            //    Method = HttpMethod.Get,
-            //    RequestUri = new Uri("http://localhost:7197/api/elevator"),
-            //    Content = new StringContent(id, Encoding.UTF8, MediaTypeNames.Application.Json),
-            //};
-
-            //var response = await _client.SendAsync(request);
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var content = await response.Content.ReadAsStringAsync();
-            //    Item = JsonConvert.DeserializeObject<ElevatorDetailsModel>(content);
-            //}
-            //return Item;
         }
-
-        //public async Task<IEnumerable<ElevatorDetailsModel>> GetAllElevatorsDetailedAsync()
-        //{
-        //    DetailedItems = new List<ElevatorDetailsModel>();
-
-        //    var uri = new Uri(string.Format($"{baseUrl}/elevator/all/detailed", string.Empty));
-        //    try
-        //    {
-        //        var response = await _client.GetAsync(uri);
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var content = await response.Content.ReadAsStringAsync();
-        //            DetailedItems = JsonSerializer.Deserialize<List<ElevatorDetailsModel>>(content, _serializerOptions);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(@"\tERROR {0}", ex.Message);
-        //    }
-
-        //    return DetailedItems;
-        //}
     }
 }

@@ -22,7 +22,7 @@ namespace MobileAppMaui.Services
         public readonly HttpClient _client;
         public readonly JsonSerializerOptions _serializerOptions;
 
-        public ErrandModel Item;
+        public ErrandModel Item { get; set; }
 
         public List<ErrandModel> Errands { get; set; }
 
@@ -36,7 +36,7 @@ namespace MobileAppMaui.Services
             };
         }
 
-        public async Task<ErrandModel> GetOneErrandAsync(string id)
+        public async Task<ErrandModel> GetErrandByIdAsync(string id)
         {
             Item = new ErrandModel();
 

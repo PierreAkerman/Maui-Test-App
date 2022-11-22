@@ -75,6 +75,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        errand = await ErrandService.GetOneErrandAsync(ErrandId);
+        errand = await ErrandService.GetErrandByIdAsync(ErrandId);
     }
 }
