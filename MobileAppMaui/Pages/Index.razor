@@ -50,6 +50,6 @@ else
 
     private  void DisplayOption(ElevatorDetailsModel elevator)
     {
-        Navigation.NavigateTo($"ElevatorDetails/{elevator.Id}");
+        Navigation.NavigateTo($"ElevatorDetails/{ elevator.Id.ToString() }");
     }
 }
