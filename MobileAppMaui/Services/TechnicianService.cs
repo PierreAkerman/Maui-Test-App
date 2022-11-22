@@ -32,11 +32,15 @@ namespace MobileAppMaui.Services
             Technicians = new List<TechnicianModel>();
 
             var uri = new Uri(string.Format($"{baseUrl}/technician/all", string.Empty));
-            var response = await _client.GetAsync(uri);
             try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                Technicians = JsonSerializer.Deserialize<List<TechnicianModel>>(content, _serializerOptions);
+	            var response = await _client.GetAsync(uri);
+	            if (response.IsSuccessStatusCode)
+	            {
+		            var content = await response.Content.ReadAsStringAsync();
+		            Technicians = JsonSerializer.Deserialize<List<TechnicianModel>>(content, _serializerOptions);
+				}
+				
             }
             catch (Exception ex)
             {
