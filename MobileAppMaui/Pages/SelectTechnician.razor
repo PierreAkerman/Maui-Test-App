@@ -1,5 +1,5 @@
 ﻿@page "/SelectTechnician"
-@using MobileAppMaui.Data
+@using MobileAppMaui.Models
 @using MobileAppMaui.Services
 @inject ITechnicianService TechnicianService
 
@@ -15,7 +15,6 @@ else
         <table class="table">
             <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
             </tr>
             </thead>
@@ -23,7 +22,6 @@ else
             @foreach (var technician in technicians)
             {
                 <tr>
-                    <td>@technician.Id</td>
                     <td>@technician.Name</td>
                 </tr>
             }
@@ -41,6 +39,4 @@ else
     {
         technicians = await TechnicianService.GetAllTechnicians();
     }
-
-
 }

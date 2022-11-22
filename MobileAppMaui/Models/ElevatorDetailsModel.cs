@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace MobileAppMaui.Data
+namespace MobileAppMaui.Models
 {
     public enum ElevatorStatus
     {
@@ -13,13 +9,16 @@ namespace MobileAppMaui.Data
         Running /*Elevator on, doors closed, running*/,
         Error /*Elevator error*/
     }
-    public class ElevatorListModel
+
+    public class ElevatorDetailsModel
     {
         public Guid Id { get; set; }
+        public string ConnectionString { get; set; }
         public string Name { get; set; }
         public ElevatorStatus Status { get; set; }
         public bool DoorStatus { get; set; }
         public int CurrentLevel { get; set; }
         public int TargetLevel { get; set; }
+        public List<ErrandModel> Errands { get; set; }
     }
 }

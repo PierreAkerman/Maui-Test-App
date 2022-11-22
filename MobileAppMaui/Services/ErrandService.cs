@@ -1,46 +1,28 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
-using MobileAppMaui.Data;
-using System.Text.Json;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 using System.Diagnostics;
-using System.Reflection.Metadata;
-using System.Net.Mime;
+using MobileAppMaui.Models;
 
 namespace MobileAppMaui.Services
 {
     public class ErrandService : IErrandService
     {
-        public static readonly string baseUrl = "https://grupp3azurefunctions.azurewebsites.net/api";
+        private const string BaseUrl = "https://grupp3azurefunctions.azurewebsites.net/api";
 
-        public readonly HttpClient _client;
-        public readonly JsonSerializerOptions _serializerOptions;
+        private readonly HttpClient _client;
 
         public ErrandModel Item { get; set; }
-
         public List<ErrandModel> Errands { get; set; }
 
         public ErrandService()
         {
             _client = new HttpClient();
-            _serializerOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
         }
 
         public async Task<ErrandModel> GetErrandByIdAsync(string id)
         {
             Item = new ErrandModel();
 
-            var uri = new Uri(string.Format($"{baseUrl}/errand?id={id}", string.Empty));
+            var uri = new Uri(string.Format($"{BaseUrl}/errand?id={id}", string.Empty));
             try
             {
                 var response = await _client.GetAsync(uri);
@@ -62,7 +44,7 @@ namespace MobileAppMaui.Services
         {
             Errands = new List<ErrandModel>();
 
-            var uri = new Uri(string.Format($"{baseUrl}/technicianErrand?id={id}", string.Empty));
+            var uri = new Uri(string.Format($"{BaseUrl}/technicianErrand?id={id}", string.Empty));
 
             try
             {

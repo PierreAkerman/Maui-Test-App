@@ -1,45 +1,27 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
-using MobileAppMaui.Data;
-using System.Text.Json;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 using System.Diagnostics;
-using System.Reflection.Metadata;
-using System.Net.Mime;
+using MobileAppMaui.Models;
 
 namespace MobileAppMaui.Services
 {
     public class ElevatorService : IElevatorService
     {
-        public static readonly string baseUrl = "https://grupp3azurefunctions.azurewebsites.net/api";
+        private const string BaseUrl = "https://grupp3azurefunctions.azurewebsites.net/api";
 
-        public readonly HttpClient _client;
-        public readonly JsonSerializerOptions _serializerOptions;
-
+        private readonly HttpClient _client;
         public List<ElevatorDetailsModel> Items { get; set; }
         public ElevatorDetailsModel Item { get; private set; }
 
         public ElevatorService()
         {
             _client = new HttpClient();
-            _serializerOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
         }
 
         public async Task<IEnumerable<ElevatorDetailsModel>> GetAllElevatorsAsync()
         {
             Items = new List<ElevatorDetailsModel>();
 
-            var uri = new Uri(string.Format($"{baseUrl}/elevator/all/detailed?", string.Empty));
+            var uri = new Uri(string.Format($"{BaseUrl}/elevator/all/detailed?", string.Empty));
             try
             {
                 var response = await _client.GetAsync(uri);
@@ -60,7 +42,7 @@ namespace MobileAppMaui.Services
         {
             Item = new ElevatorDetailsModel();
 
-            var uri = new Uri(string.Format($"{baseUrl}/elevator?id={id}", string.Empty));
+            var uri = new Uri(string.Format($"{BaseUrl}/elevator?id={id}", string.Empty));
             try
             {
                 var response = await _client.GetAsync(uri);

@@ -1,6 +1,6 @@
 ﻿@page "/"
 @using MobileAppMaui.Services
-@using MobileAppMaui.Data
+@using MobileAppMaui.Models
 @inject IElevatorService ElevatorService;
 @inject NavigationManager Navigation;
 
@@ -14,7 +14,7 @@ else
 {
     <div class="table-responsive">
         <table class="table">
-            <thead>
+            <thead>   
             <tr>
                 <th>Name</th>
                 <th>Status</th>

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
 using System.Text.Json;
-using System.Threading.Tasks;
-using MobileAppMaui.Data;
+using MobileAppMaui.Models;
 
 namespace MobileAppMaui.Services
 {
     public class TechnicianService : ITechnicianService
     {
-        public static readonly string baseUrl = "https://grupp3azurefunctions.azurewebsites.net/api";
+        private const string BaseUrl = "https://grupp3azurefunctions.azurewebsites.net/api";
 
         private readonly HttpClient _client;
         private readonly JsonSerializerOptions _serializerOptions;
@@ -31,7 +26,7 @@ namespace MobileAppMaui.Services
         {
             Technicians = new List<TechnicianModel>();
 
-            var uri = new Uri(string.Format($"{baseUrl}/technician/all", string.Empty));
+            var uri = new Uri(string.Format($"{BaseUrl}/technician/all", string.Empty));
             try
             {
 	            var response = await _client.GetAsync(uri);
