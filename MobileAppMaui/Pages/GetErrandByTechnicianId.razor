@@ -33,13 +33,11 @@ else
                         <td>@errand.Title</td>
                         <td>@errand.Description</td>
                         <td>@errand.Status</td>
-                        <td>@errand.LastEdited</td>
-                        <td>@errand.CreatedAt</td>
+                        <td>@errand.LastEdited.ToString("d")</td>
+                        <td>@errand.CreatedAt.ToString("d")</td>
                         <td>@errand.CreatedBy</td>
-                        <td>@errand.Technician</td>
-                        @*<td>
-                            @foreach (var comment in comments)
-                        </td>*@
+                        <td>@errand.Technician.Name</td>
+                        <td>@errand.Comments.Count</td>
                     </tr>
                 }
             </tbody>

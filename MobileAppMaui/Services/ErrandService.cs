@@ -17,7 +17,7 @@ namespace MobileAppMaui.Services
 {
     public class ErrandService : IErrandService
     {
-        //public static readonly string baseUrl = "http://localhost:7197/api/technicianErrand";
+        public static readonly string baseUrl = "https://grupp3azurefunctions.azurewebsites.net/api";
 
         public readonly HttpClient _client;
         public readonly JsonSerializerOptions _serializerOptions;
@@ -34,11 +34,11 @@ namespace MobileAppMaui.Services
             };
         }
 
-        public async Task<List<ErrandModel>> GetErrandsFromTechnicianIdAsync(string id)
+        public async Task<IEnumerable<ErrandModel>> GetErrandsFromTechnicianIdAsync(string id)
         {
             Errands = new List<ErrandModel>();
 
-            var uri = new Uri(string.Format("http://localhost:7197/api/technicianErrand", string.Empty));
+            var uri = new Uri(string.Format($"{baseUrl}/technicianErrand?id={id}", string.Empty));
 
             try
             {
@@ -46,7 +46,7 @@ namespace MobileAppMaui.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    Errands = JsonSerializer.Deserialize<List<ErrandModel>>(content);
+                    Errands = JsonConvert.DeserializeObject<List<ErrandModel>>(content);
                 }
             }
             catch (Exception ex)

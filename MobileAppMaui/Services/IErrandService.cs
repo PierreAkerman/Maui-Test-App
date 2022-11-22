@@ -9,6 +9,6 @@ namespace MobileAppMaui.Services
 {
     public interface IErrandService
     {
-        Task<List<ErrandModel>> GetErrandsFromTechnicianIdAsync(string id);
+        Task<IEnumerable<ErrandModel>> GetErrandsFromTechnicianIdAsync(string id);
     }
 }
