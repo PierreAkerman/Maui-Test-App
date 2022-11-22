@@ -13,6 +13,7 @@
 else
 {
     <div class="table-responsive">
+       
         <table class="table">
             <tbody>
                 @foreach (var errand in errands)
@@ -27,7 +28,15 @@ else
                     </tr>
                     <tr>
                         <th>Status</th>
-                        <td>@errand.Status</td>
+                        <td>
+                            @*@errand.Status*@
+                            <select class="form-control" @bind="@SelectedStatus">
+                                @foreach(var status in StatusList)
+                                {
+                                    <option value="@status"></option>
+                                }
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <th>Last edited</th>
@@ -68,6 +77,8 @@ else
 
 @code {
     IEnumerable<ErrandModel> errands;
+    string SelectedStatus;
+    List<ErrandStatus> StatusList = new List<ErrandStatus>();
 
 
     protected override async Task OnInitializedAsync()
