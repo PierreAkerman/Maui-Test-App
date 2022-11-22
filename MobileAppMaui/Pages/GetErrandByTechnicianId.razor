@@ -29,11 +29,10 @@ else
                     <tr>
                         <th>Status</th>
                         <td>
-                            @*@errand.Status*@
                             <select class="form-control" @bind="@SelectedStatus">
                                 @foreach(var status in StatusList)
                                 {
-                                    <option value="@status"></option>
+                                    <option value="@status.ToString()">@status.ToString()</option>
                                 }
                             </select>
                         </td>
@@ -72,17 +71,28 @@ else
                 }
             </tbody>
         </table>
-      </div>  
+      </div> 
+      
+      <button type="submit" @onclick="UpdateErrand" class="mt-2 btn btn-primary">Submit</button>
 }
 
 @code {
     IEnumerable<ErrandModel> errands;
-    string SelectedStatus;
-    List<ErrandStatus> StatusList = new List<ErrandStatus>();
+    private string SelectedStatus;
+
+    List<ErrandStatus> StatusList = Enum.GetValues(typeof(ErrandStatus)).Cast<ErrandStatus>().ToList();
 
 
     protected override async Task OnInitializedAsync()
     {
-        errands = await ErrandService.GetErrandsFromTechnicianIdAsync("4d91ae92-e9cd-4af1-bb33-432ce12d5864");
+        errands = await ErrandService.GetErrandsByTechnicianIdAsync("4d91ae92-e9cd-4af1-bb33-432ce12d5864");
+    }
+
+    public async void UpdateErrand()
+    {
+        
+        //await ErrandService.UpdateErrandStatus()
+        //Checks if the method is envoked
+        await App.Current.MainPage.DisplayAlert("Button Click Invoke", "Button Clicked", "Ok");
     }
 }

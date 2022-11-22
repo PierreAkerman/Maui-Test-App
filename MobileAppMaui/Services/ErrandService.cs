@@ -12,6 +12,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 using System.Net.Mime;
+using System.Net.Http;
 
 namespace MobileAppMaui.Services
 {
@@ -34,12 +35,11 @@ namespace MobileAppMaui.Services
             };
         }
 
-        public async Task<List<ErrandModel>> GetErrandsFromTechnicianIdAsync(string id)
+        public async Task<List<ErrandModel>> GetErrandsByTechnicianIdAsync(string id)
         {
             Errands = new List<ErrandModel>();
 
             //id = "4d91ae92-e9cd-4af1-bb33-432ce12d5864";
-
 
 
             var uri = new Uri(string.Format($"https://grupp3azurefunctions.azurewebsites.net/api/technicianErrand?id={id}", string.Empty));
@@ -58,6 +58,20 @@ namespace MobileAppMaui.Services
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
             }
             return Errands;
+        }
+
+        public async Task<HttpStatusCode> UpdateErrandStatus(string errandId, ErrandStatus status)
+        {
+            var uri = new Uri(string.Format($"https://grupp3azurefunctions.azurewebsites.net/api/errands?id={errandId}", string.Empty));
+                                                                                    
+            var response = await _client.PutAsync(uri.ToString(), new StringContent("{\"id\":"+ errandId +",\"status\":" + status +"}", Encoding.UTF8, "application/json"));
+            if (response.IsSuccessStatusCode)
+            {
+                return HttpStatusCode.OK;
+            }
+            return HttpStatusCode.BadRequest;
+
+            
         }
         
     }
