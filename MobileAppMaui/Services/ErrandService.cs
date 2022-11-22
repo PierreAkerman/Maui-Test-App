@@ -38,7 +38,7 @@ namespace MobileAppMaui.Services
         {
             Errands = new List<ErrandModel>();
 
-            id = "4d91ae92-e9cd-4af1-bb33-432ce12d5864";
+            //id = "4d91ae92-e9cd-4af1-bb33-432ce12d5864";
 
 
 
@@ -50,7 +50,7 @@ namespace MobileAppMaui.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    Errands = JsonSerializer.Deserialize<List<ErrandModel>>(content);
+                    Errands = JsonConvert.DeserializeObject<List<ErrandModel>>(content);
                 }
             }
             catch (Exception ex)
