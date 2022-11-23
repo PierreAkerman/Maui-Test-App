@@ -21,6 +21,7 @@ namespace MobileAppMaui
             builder.Services.AddSingleton<IElevatorService, ElevatorService>();
             builder.Services.AddSingleton<IErrandService, ErrandService>();
             builder.Services.AddSingleton<ITechnicianService, TechnicianService>();
+            builder.Services.AddSingleton<ICommentService, CommentService>();
 
             return builder.Build();
         }

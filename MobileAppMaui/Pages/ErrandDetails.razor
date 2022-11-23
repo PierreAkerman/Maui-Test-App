@@ -41,13 +41,15 @@ else
         </table>
     </div>
 
+
+
     <div class="table-responsive">
         <h3>Comments</h3>
         <table class="table">
             <thead>
             <tr>
-                <th>Comment</th>
-                <th>Author</th>
+                <th class="col-10">Comment</th>
+                @*<th>Author</th>*@
                 <th>Posted</th>
             </tr>
             </thead>
@@ -55,13 +57,21 @@ else
             @foreach (var comment in _errand.Comments)
             {
                 <tr>
-                    <td>@comment.Content</td>
-                    <td>@comment.Author</td>
+                    <td class="col-10">@comment.Content</td>
+                    @*<td>@comment.Author</td>*@
                     <td>@comment.PostedAt.ToString("d")</td>
                 </tr>
             }
             </tbody>
         </table>
+        <div class="mx-auto">
+            <form method="post" class="form-control">
+                <div class="form-group text-center">
+                    <textarea class="form-control mt-3" placeholder="Write comment here..."></textarea>
+                    <button class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
+                </div>
+            </form>
+        </div>
     </div>
 
 }
