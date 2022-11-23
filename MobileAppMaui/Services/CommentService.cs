@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using MobileAppMaui.Models;
+using Newtonsoft.Json;
 
 namespace MobileAppMaui.Services
 {
@@ -30,10 +31,10 @@ namespace MobileAppMaui.Services
 
         public async Task SaveCommentAsync(ErrandCommentModel comment) // Inte klar/testat!
         {
-            var uri = new Uri(string.Format($"{BaseUrl}comment/create", string.Empty));
+            var uri = new Uri(string.Format($"{BaseUrl}/comment/create", string.Empty));
             try
             {
-                var json = JsonSerializer.Serialize(comment, _serializerOptions);
+                var json = JsonConvert.SerializeObject(comment);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _client.PostAsync(uri, content);

@@ -9,6 +9,7 @@ namespace MobileAppMaui.Models
         public Guid? Author { get; set; }
         public DateTime PostedAt { get; set; }
 
+
         public ErrandCommentModel(Guid id, string content, string author, DateTime postedAt)
         {
             Id = id;
