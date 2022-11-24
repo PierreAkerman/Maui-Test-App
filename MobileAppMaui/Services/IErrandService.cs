@@ -13,5 +13,6 @@ namespace MobileAppMaui.Services
         Task<ErrandModel> GetErrandByIdAsync(string id);
         Task<IEnumerable<ErrandModel>> GetErrandsFromTechnicianIdAsync(string id);
         Task<HttpStatusCode> UpdateErrandStatus(string errandId, ErrandStatus status);
+        Task<HttpStatusCode> UpdateStatusAsync(string errandId, string status);
     }
 }

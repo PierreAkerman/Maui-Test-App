@@ -1,5 +1,6 @@
 ﻿@page "/ErrandDetails"
 @page "/ErrandDetails/{ErrandId}"
+@inject NavigationManager NavManager
 
 @using MobileAppMaui.Services
 @using MobileAppMaui.Models
@@ -33,10 +34,10 @@ else
                 <td>@_errand.Title</td>
                 <td>@_errand.Description</td>
                     <td>
-                        <select class="form-control" @bind="SelectedStatus" >
+                        <select size="4" value="@SelectedStatus" @onchange="@ChangeStatus" class="form-control">
                             @foreach (var status in StatusList)
                             {
-                                <option @onchange="ChangeStatus" value="@status.ToString()">@status.ToString()</option>
+                                <option value="@status.ToString()">@status.ToString()</option>
                             }
                         </select>
                     </td>
@@ -89,6 +90,7 @@ else
     [Parameter]
     public string ErrandId { get; set; }
     ErrandModel _errand;
+
     public ErrandStatus SelectedStatus;
 
     List<ErrandStatus> StatusList = Enum.GetValues(typeof(ErrandStatus)).Cast<ErrandStatus>().ToList();
@@ -112,10 +114,25 @@ else
         await CommentService.SaveCommentAsync(commentModel);
     }
 
-    public async void ChangeStatus()
+    public async void ChangeStatus(ChangeEventArgs e)
     {
-        await ErrandService.UpdateErrandStatus(ErrandId, SelectedStatus);
+        var respond = await ErrandService.UpdateStatusAsync(ErrandId, e.Value.ToString());
+
+        if(respond.ToString() == "OK")
+        {
+            Navigation.NavigateTo($"ErrandDetails/{ErrandId.ToString()}");
+        }
+        //Navigation.NavigateTo($"SelectTechnicians");
+        
+
+        //if(respond.ToString() == "OK")
+        //{
+        //    return RedirectToPage("ErrandDetails", new { $"ErrandDetails/{ErrandId.ToString()}" });
+        //}
+        //return Page();
+
         //Checks if the method is envoked
-        await App.Current.MainPage.DisplayAlert("Button Click Invoke", "Button Clicked", "Ok");
+        //await App.Current.MainPage.DisplayAlert("", "Status updated", "Ok");
     }
+
 }
