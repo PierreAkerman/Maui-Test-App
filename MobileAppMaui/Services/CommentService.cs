@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using MobileAppMaui.Models;
 using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace MobileAppMaui.Services
 {
@@ -29,7 +30,7 @@ namespace MobileAppMaui.Services
             };
         }
 
-        public async Task SaveCommentAsync(ErrandCommentModel comment) // Inte klar/testat!
+        public async Task SaveCommentAsync(CreateErrandCommentModel comment)
         {
             var uri = new Uri(string.Format($"{BaseUrl}/comment/create", string.Empty));
             try
@@ -40,7 +41,9 @@ namespace MobileAppMaui.Services
                 var response = await _client.PostAsync(uri, content);
 
                 if (response.IsSuccessStatusCode)
+                {
                     Debug.WriteLine(@"\tComment successfully saved.");
+                }
             }
             catch (Exception ex)
             {

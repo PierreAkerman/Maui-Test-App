@@ -4,6 +4,6 @@ namespace MobileAppMaui.Services
 {
     public interface ICommentService
     {
-        Task SaveCommentAsync(ErrandCommentModel comment);
+        Task SaveCommentAsync(CreateErrandCommentModel comment);
     }
 }
