@@ -32,7 +32,14 @@ else
             <tr>
                 <td>@_errand.Title</td>
                 <td>@_errand.Description</td>
-                <td>@_errand.Status</td>
+                    <td>
+                        <select class="form-control" @bind="SelectedStatus" >
+                            @foreach (var status in StatusList)
+                            {
+                                <option @onchange="ChangeStatus" value="@status.ToString()">@status.ToString()</option>
+                            }
+                        </select>
+                    </td>
                 <td>@_errand.LastEdited.ToString("d")</td>
                 <td>@_errand.CreatedAt.ToString("d")</td>
                 <td>@_errand.CreatedBy</td>
@@ -79,11 +86,12 @@ else
 @code {
 
     public string Content;
-
     [Parameter]
     public string ErrandId { get; set; }
-
     ErrandModel _errand;
+    public ErrandStatus SelectedStatus;
+
+    List<ErrandStatus> StatusList = Enum.GetValues(typeof(ErrandStatus)).Cast<ErrandStatus>().ToList();
 
     protected override async Task OnInitializedAsync()
     {
@@ -102,5 +110,12 @@ else
         };
 
         await CommentService.SaveCommentAsync(commentModel);
+    }
+
+    public async void ChangeStatus()
+    {
+        await ErrandService.UpdateErrandStatus(ErrandId, SelectedStatus);
+        //Checks if the method is envoked
+        await App.Current.MainPage.DisplayAlert("Button Click Invoke", "Button Clicked", "Ok");
     }
 }

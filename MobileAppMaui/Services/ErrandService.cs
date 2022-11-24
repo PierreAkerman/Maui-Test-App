@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Diagnostics;
 using MobileAppMaui.Models;
+using System.Net;
+using System.Text;
 
 namespace MobileAppMaui.Services
 {
@@ -60,6 +62,18 @@ namespace MobileAppMaui.Services
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
             }
             return Errands;
+        }
+
+        public async Task<HttpStatusCode> UpdateErrandStatus(string errandId, ErrandStatus status)
+        {
+            var uri = new Uri(string.Format($"https://grupp3azurefunctions.azurewebsites.net/api/errands?id={errandId}", string.Empty));
+
+            var response = await _client.PutAsync(uri.ToString(), new StringContent("{\"id\":" + errandId + ",\"status\":" + status + "}", Encoding.UTF8, "application/json"));
+            if (response.IsSuccessStatusCode)
+            {
+                return HttpStatusCode.OK;
+            }
+            return HttpStatusCode.BadRequest;
         }
     }
 }
