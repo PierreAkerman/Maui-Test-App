@@ -34,10 +34,17 @@ else
                 <td>@_errand.Title</td>
                 <td>@_errand.Description</td>
                     <td>
-                        <select size="4" value="@SelectedStatus" @onchange="@ChangeStatus" class="form-control">
+                        <select value="@SelectedStatus" @onchange="@ChangeStatus">
                             @foreach (var status in StatusList)
                             {
-                                <option value="@status.ToString()">@status.ToString()</option>
+                                if(_errand.Status == status)
+                                {
+                                    <option selected value="@status.ToString()">@status.ToString()</option>
+                                }
+                                else
+                                {
+                                    <option value="@status.ToString()">@status.ToString()</option>
+                                }
                             }
                         </select>
                     </td>
@@ -116,14 +123,17 @@ else
 
     public async void ChangeStatus(ChangeEventArgs e)
     {
-        var respond = await ErrandService.UpdateStatusAsync(ErrandId, e.Value.ToString());
+        var statusCode = await ErrandService.UpdateStatusAsync(ErrandId, e.Value.ToString());
 
-        if(respond.ToString() == "OK")
+        if(statusCode.ToString() == "OK")
         {
-            Navigation.NavigateTo($"ErrandDetails/{ErrandId.ToString()}");
+            await OnInitializedAsync();
+            await App.Current.MainPage.DisplayAlert("", "Status was updated", "Ok");
+            //Navigation.NavigateTo($"ErrandDetails/{ErrandId.ToString()}");
         }
+        else
         //Navigation.NavigateTo($"SelectTechnicians");
-        
+        await App.Current.MainPage.DisplayAlert("", "Statusupdate not succeed", "Ok");
 
         //if(respond.ToString() == "OK")
         //{
